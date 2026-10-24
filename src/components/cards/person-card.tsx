@@ -6,6 +6,7 @@ import {
   PortraitArt,
   PortraitPlaceholder,
 } from "@/components/site/portrait-art";
+import { hasPaintedPortrait } from "@/lib/painted-portraits";
 import { useLanguage } from "@/components/language/language-provider";
 import { pickString } from "@/lib/i18n";
 import type { Martyr, Tribute } from "@/sanity/types";
@@ -23,6 +24,9 @@ export function WarmPersonCard({
   const { lang } = useLanguage();
   const name = pickString(person.name, lang);
   const entity = person._type === "martyr" ? "martyr" : "tribute";
+  const slug = person.slug.current;
+  const showPortrait =
+    person.portrait || hasPaintedPortrait(entity, slug);
 
   return (
     <Link href={href} className="group block h-full w-full">
@@ -32,12 +36,8 @@ export function WarmPersonCard({
         tight
       >
         <div className="flex flex-col">
-          {person.portrait ? (
-            <PortraitArt
-              type={entity}
-              slug={person.slug.current}
-              alt={name}
-            />
+          {showPortrait ? (
+            <PortraitArt type={entity} slug={slug} alt={name} />
           ) : (
             <PortraitPlaceholder />
           )}
@@ -59,6 +59,9 @@ export function SolemnPersonCard({
 }) {
   const { lang } = useLanguage();
   const name = pickString(person.name, lang);
+  const slug = person.slug.current;
+  const showPortrait =
+    person.portrait || hasPaintedPortrait("martyr", slug);
 
   return (
     <Link
@@ -68,10 +71,10 @@ export function SolemnPersonCard({
         "border-paper/15 bg-maroon-deep/50 hover:border-marigold/50 hover:bg-maroon-deep/70",
       )}
     >
-      {person.portrait ? (
+      {showPortrait ? (
         <PortraitArt
           type="martyr"
-          slug={person.slug.current}
+          slug={slug}
           alt={name}
           className="opacity-95"
         />

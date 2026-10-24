@@ -3,8 +3,11 @@
 import Link from "next/link";
 import { Paisley, Shankh, Toran, PeacockFeather } from "@withicons/react/utsav";
 import { useLanguage } from "@/components/language/language-provider";
+import { WritingCoverArt } from "@/components/site/writing-cover-art";
 import { pickString } from "@/lib/i18n";
+import { hasWritingCover } from "@/lib/writing-covers";
 import type { Writing } from "@/sanity/types";
+import { cn } from "@/lib/utils";
 
 const kindLabel: Record<Writing["kind"], { hi: string; en: string }> = {
   article: { hi: "लेख", en: "Article" },
@@ -25,14 +28,23 @@ export function WritingCard({ item, href }: { item: Writing; href: string }) {
   const title = pickString(item.title, lang);
   const label = kindLabel[item.kind][lang];
   const Icon = kindIcon[item.kind];
+  const slug = item.slug.current;
+  const cover = hasWritingCover(slug);
 
   return (
     <Link
       href={href}
-      className="group flex h-full w-full gap-4 rounded-lg border border-border bg-card/90 p-4 transition hover:border-maroon/35 hover:shadow-sm"
+      className={cn(
+        "group flex h-full w-full overflow-hidden rounded-lg border border-border bg-card/90 transition hover:border-maroon/35 hover:shadow-sm",
+        cover ? "flex-col" : "flex-row items-start gap-4 p-4",
+      )}
     >
-      <Icon size={44} className="shrink-0" aria-hidden />
-      <div className="min-w-0 flex-1">
+      {cover ? (
+        <WritingCoverArt slug={slug} alt={title} />
+      ) : (
+        <Icon size={72} className="shrink-0" aria-hidden />
+      )}
+      <div className={cn("min-w-0 flex-1", cover && "px-4 py-4")}>
         <p className="text-xs font-semibold tracking-wide text-maroon uppercase">
           {label}
         </p>

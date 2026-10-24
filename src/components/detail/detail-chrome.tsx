@@ -4,6 +4,7 @@ import Link from "next/link";
 import { LanguageToggle } from "@/components/site/language-toggle";
 import { MemorialFrame } from "@/components/site/memorial-frame";
 import { PortraitArt } from "@/components/site/portrait-art";
+import { WritingCoverArt } from "@/components/site/writing-cover-art";
 import { useLanguage } from "@/components/language/language-provider";
 import { pickString } from "@/lib/i18n";
 import type { PortraitEntity } from "@/lib/painted-portraits";
@@ -16,6 +17,7 @@ export function DetailChrome({
   subtitle,
   variant,
   portrait,
+  writingCoverSlug,
 }: {
   backHref: string;
   backLabel: { hi: string; en: string };
@@ -23,6 +25,7 @@ export function DetailChrome({
   subtitle?: string;
   variant: "warm" | "solemn";
   portrait?: { type: PortraitEntity; slug: string } | null;
+  writingCoverSlug?: string | null;
 }) {
   const { lang } = useLanguage();
   const heading = pickString(title, lang);
@@ -40,7 +43,15 @@ export function DetailChrome({
       </header>
       <div className="mx-auto max-w-3xl px-6">
         <MemorialFrame variant={variant} className="mb-8 overflow-hidden" tight>
-          {portrait ? (
+          {writingCoverSlug ? (
+            <WritingCoverArt
+              slug={writingCoverSlug}
+              alt={heading}
+              className="max-h-[min(50vh,420px)]"
+              sizes="(max-width: 768px) 100vw, 672px"
+              priority
+            />
+          ) : portrait ? (
             <PortraitArt
               type={portrait.type}
               slug={portrait.slug}

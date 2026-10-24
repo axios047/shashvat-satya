@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import { DetailLayout } from "@/components/detail/detail-layout";
+import { slugCandidates } from "@/lib/slug-candidates";
+import { hasWritingCover } from "@/lib/writing-covers";
 import { sanityFetch } from "@/sanity/fetch";
 import { writingBySlugQuery } from "@/sanity/queries";
 import type { Writing } from "@/sanity/types";
@@ -16,9 +18,11 @@ export default async function WritingPage({
 }: PageProps<"/writings/[slug]">) {
   const { slug } = await params;
   const writing = await sanityFetch<Writing | null>(writingBySlugQuery, {
-    slug,
+    slugs: slugCandidates(slug),
   });
   if (!writing) notFound();
+
+  const storedSlug = writing.slug.current;
 
   return (
     <DetailLayout
@@ -27,6 +31,9 @@ export default async function WritingPage({
       title={writing.title}
       bodyHtml={writing.bodyHtml}
       variant="warm"
+      writingCoverSlug={
+        hasWritingCover(storedSlug) ? storedSlug : null
+      }
     />
   );
 }

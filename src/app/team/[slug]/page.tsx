@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import { DetailLayout } from "@/components/detail/detail-layout";
+import { hasPaintedPortrait } from "@/lib/painted-portraits";
+import { slugCandidates } from "@/lib/slug-candidates";
 import { sanityFetch } from "@/sanity/fetch";
 import { teamBySlugQuery } from "@/sanity/queries";
 import type { TeamMember } from "@/sanity/types";
@@ -16,9 +18,13 @@ export default async function TeamPage({
 }: PageProps<"/team/[slug]">) {
   const { slug } = await params;
   const member = await sanityFetch<TeamMember | null>(teamBySlugQuery, {
-    slug,
+    slugs: slugCandidates(slug),
   });
   if (!member) notFound();
+
+  const storedSlug = member.slug.current;
+  const showPortrait =
+    member.portrait || hasPaintedPortrait("teamMember", storedSlug);
 
   return (
     <DetailLayout
@@ -31,9 +37,7 @@ export default async function TeamPage({
       }}
       variant="warm"
       portrait={
-        member.portrait
-          ? { type: "teamMember", slug: member.slug.current }
-          : null
+        showPortrait ? { type: "teamMember", slug: storedSlug } : null
       }
     />
   );

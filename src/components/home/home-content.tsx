@@ -15,6 +15,7 @@ import {
   PortraitArt,
   PortraitPlaceholder,
 } from "@/components/site/portrait-art";
+import { hasPaintedPortrait } from "@/lib/painted-portraits";
 import { SnapRail } from "@/components/ui/snap-rail";
 import { useLanguage } from "@/components/language/language-provider";
 import { pickString } from "@/lib/i18n";
@@ -220,7 +221,8 @@ function TeamCard({ member }: { member: TeamMember }) {
       href={`/team/${member.slug.current}`}
       className="group block h-full w-full overflow-hidden rounded-lg border-2 border-marigold/70 bg-paper shadow-[inset_0_0_0_1px_var(--maroon-deep)] transition hover:shadow-md"
     >
-      {member.portrait ? (
+      {member.portrait ||
+      hasPaintedPortrait("teamMember", member.slug.current) ? (
         <PortraitArt
           type="teamMember"
           slug={member.slug.current}

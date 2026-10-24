@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { DetailLayout } from "@/components/detail/detail-layout";
+import { slugCandidates } from "@/lib/slug-candidates";
 import { sanityFetch } from "@/sanity/fetch";
 import { pageBySlugQuery } from "@/sanity/queries";
 import type { SitePage } from "@/sanity/types";
@@ -25,7 +26,9 @@ export default async function SitePageRoute({
   const { slug } = await params;
   if (reserved.has(slug)) notFound();
 
-  const page = await sanityFetch<SitePage | null>(pageBySlugQuery, { slug });
+  const page = await sanityFetch<SitePage | null>(pageBySlugQuery, {
+    slugs: slugCandidates(slug),
+  });
   if (!page) notFound();
 
   return (

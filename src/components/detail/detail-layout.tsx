@@ -13,6 +13,7 @@ export async function DetailLayout({
   bodyHtml,
   variant = "warm",
   portrait,
+  writingCoverSlug,
 }: {
   backHref: string;
   backLabel: { hi: string; en: string };
@@ -21,6 +22,7 @@ export async function DetailLayout({
   bodyHtml?: BilingualText;
   variant?: "warm" | "solemn";
   portrait?: { type: PortraitEntity; slug: string } | null;
+  writingCoverSlug?: string | null;
 }) {
   const html = {
     hi: bodyHtml?.hi ? await sanitizeContent(bodyHtml.hi) : "",
@@ -43,6 +45,7 @@ export async function DetailLayout({
           subtitle={subtitle}
           variant={variant}
           portrait={portrait}
+          writingCoverSlug={writingCoverSlug}
         />
         <main className="mx-auto max-w-3xl px-6 pb-20">
           <LocalizedHtml html={html} />

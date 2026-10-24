@@ -6,9 +6,32 @@ import { Diya, Kalash, Lotus } from "@withicons/react/utsav";
 import { CeremonyHeader } from "@/components/home/ceremony-header";
 import { FadeIn } from "@/components/motion/fade-in";
 import { LanguageToggle } from "@/components/site/language-toggle";
-import { FloralFrame } from "@/components/site/floral-frame";
+import { StarFrame } from "@/components/site/star-frame";
 import { useLanguage } from "@/components/language/language-provider";
 import { cn } from "@/lib/utils";
+
+function ScrollCue() {
+  return (
+    <svg
+      viewBox="0 0 120 88"
+      overflow="visible"
+      className="h-14 w-24 drop-shadow-[0_2px_10px_rgba(42,33,24,0.45)]"
+      aria-hidden
+    >
+      <g fill="var(--card)">
+        <animateTransform
+          attributeName="transform"
+          type="translate"
+          values="0 0; 0 8; 0 0"
+          dur="1.6s"
+          repeatCount="indefinite"
+        />
+        <polygon points="14,10 60,42 106,10 92,10 60,32 28,10" />
+        <polygon points="14,32 60,64 106,32 92,32 60,54 28,32" opacity="0.72" />
+      </g>
+    </svg>
+  );
+}
 
 export function CeremonialHero() {
   const { lang } = useLanguage();
@@ -47,7 +70,7 @@ export function CeremonialHero() {
       <section
         id="ceremony"
         ref={heroRef}
-        className="relative flex min-h-[90vh] items-center justify-center overflow-hidden px-4 py-16 sm:px-6"
+        className="group relative flex min-h-[90vh] items-center justify-center overflow-hidden px-4 py-16 sm:px-6"
       >
       <Image
         src="/art/hero-courtyard.jpg"
@@ -61,9 +84,9 @@ export function CeremonialHero() {
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(243,234,223,0.42)_0%,rgba(243,234,223,0.12)_46%,transparent_72%)]"
         aria-hidden
       />
-      <div className="relative z-10 w-full max-w-3xl">
-        <FloralFrame />
-        <FadeIn className="flex flex-col items-center gap-6 px-8 py-28 text-center sm:px-12 md:px-16 md:py-40">
+      <div className="relative z-10 mx-auto w-full max-w-2xl sm:max-w-3xl">
+        <StarFrame />
+        <FadeIn className="relative flex flex-col items-center gap-5 px-10 py-24 text-center sm:gap-6 sm:px-14 sm:py-28 md:px-20 md:py-32">
           <div className="flex items-end justify-center gap-5">
             <Lotus size={52} aria-hidden />
             <Diya size={64} aria-hidden />
@@ -104,14 +127,21 @@ export function CeremonialHero() {
               ? "परिवार की श्रद्धांजलि और भारत के अमर बलिदानियों के प्रति स्मरण — एक स्मारक प्रकाशन।"
               : "Family shradhanjali and remembrance of Bharat's martyrs — a memorial publication."}
           </p>
-          <a
-            href="#sections"
-            className="text-sm font-semibold text-maroon underline-offset-4 hover:underline"
-          >
-            {lang === "hi" ? "स्मरण देखें" : "Enter the memorial"}
-          </a>
         </FadeIn>
       </div>
+      <a
+        href="#sections"
+        aria-label={lang === "hi" ? "स्मरण देखें" : "Enter the memorial"}
+        onClick={(event) => {
+          event.preventDefault();
+          document
+            .getElementById("sections")
+            ?.scrollIntoView({ behavior: "smooth" });
+        }}
+        className="absolute bottom-8 left-1/2 z-20 -translate-x-1/2 p-2 transition duration-300 hover:translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-marigold"
+      >
+        <ScrollCue />
+      </a>
       </section>
     </>
   );

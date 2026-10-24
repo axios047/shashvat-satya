@@ -37,12 +37,15 @@ export function SectionBlock({
     >
       <div className="mx-auto max-w-6xl px-6">
         <header className="mb-10 border-b-2 border-marigold/50 pb-5">
-          <div className="flex flex-wrap items-end gap-4">
+          <div className="flex flex-wrap items-center gap-5">
             {icon ? (
               <SectionEmblem
                 id={icon}
-                size={44}
-                className={tone === "solemn" ? "brightness-110" : undefined}
+                size={72}
+                className={cn(
+                  "shrink-0",
+                  tone === "solemn" ? "brightness-110" : undefined,
+                )}
               />
             ) : null}
             <div className="min-w-0 flex-1">

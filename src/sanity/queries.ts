@@ -37,21 +37,21 @@ export const homepageQuery = defineQuery(`{
 }`);
 
 export const tributeBySlugQuery = defineQuery(`
-  *[_type == "tribute" && slug.current == $slug][0] { ${docFields} }
+  *[_type == "tribute" && slug.current in $slugs][0] { ${docFields} }
 `);
 
 export const martyrBySlugQuery = defineQuery(`
-  *[_type == "martyr" && slug.current == $slug][0] { ${docFields} }
+  *[_type == "martyr" && slug.current in $slugs][0] { ${docFields} }
 `);
 
 export const writingBySlugQuery = defineQuery(`
-  *[_type == "writing" && slug.current == $slug][0] { ${docFields} }
+  *[_type == "writing" && slug.current in $slugs][0] { ${docFields} }
 `);
 
 export const teamBySlugQuery = defineQuery(`
-  *[_type == "teamMember" && slug.current == $slug][0] { ${docFields} }
+  *[_type == "teamMember" && slug.current in $slugs][0] { ${docFields} }
 `);
 
 export const pageBySlugQuery = defineQuery(`
-  *[_type == "page" && slug.current == $slug][0] { ${docFields} }
+  *[_type == "page" && slug.current in $slugs][0] { ${docFields} }
 `);
