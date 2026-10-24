@@ -115,9 +115,7 @@ export function CeremonialHero() {
             ))}
           </p>
           <h1 className="font-heading text-5xl leading-[1.05] font-extrabold text-maroon-deep sm:text-6xl md:text-7xl">
-            <span className="block font-[family-name:var(--font-devanagari)]">
-              शाश्वत सत्य
-            </span>
+            <span className="block">शाश्वत सत्य</span>
             <span className="mt-3 block text-2xl font-bold text-ink/85 sm:text-3xl">
               Shashvat Satya
             </span>

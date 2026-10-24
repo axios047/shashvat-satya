@@ -8,7 +8,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-latin), ui-serif, serif;
-  --font-heading: var(--font-eczar), var(--font-devanagari), ui-serif, serif;
+  --font-heading: var(--font-jaini), var(--font-eczar), var(--font-devanagari), ui-serif, serif;
   --font-body-hi: var(--font-devanagari), ui-serif, serif;
   --font-body-en: var(--font-latin), ui-serif, serif;
   --color-maroon: var(--maroon);
@@ -149,7 +149,17 @@
   [data-lang="en"] {
     font-family: var(--font-body-en);
   }
-  .font-heading {
-    font-family: var(--font-eczar), var(--font-devanagari), ui-serif, serif;
+  strong,
+  b,
+  .font-bold,
+  .font-extrabold {
+    font-family: var(--font-jaini), var(--font-latin), var(--font-devanagari), ui-serif, serif;
+    font-synthesis: none;
+  }
+
+  .font-heading,
+  .font-heading :is(strong, b, .font-bold, .font-extrabold) {
+    font-family: var(--font-jaini), var(--font-eczar), var(--font-devanagari), ui-serif, serif;
+    font-synthesis: none;
   }
 }

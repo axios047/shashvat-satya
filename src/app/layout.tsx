@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
-import { Eczar, Newsreader, Tiro_Devanagari_Hindi } from "next/font/google";
+import { Eczar, Jaini, Newsreader, Tiro_Devanagari_Hindi } from "next/font/google";
 import "./globals.css";
 
 const eczar = Eczar({
   variable: "--font-eczar",
   subsets: ["latin", "devanagari"],
   weight: ["400", "500", "600", "700", "800"],
+});
+
+const jaini = Jaini({
+  variable: "--font-jaini",
+  subsets: ["devanagari"],
+  weight: "400",
 });
 
 const tiroDevanagari = Tiro_Devanagari_Hindi({
@@ -32,7 +38,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="hi"
-      className={`${eczar.variable} ${tiroDevanagari.variable} ${newsreader.variable} h-full antialiased`}
+      className={`${eczar.variable} ${jaini.variable} ${tiroDevanagari.variable} ${newsreader.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col font-sans text-ink">{children}</body>
     </html>
